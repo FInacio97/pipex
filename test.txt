@@ -1,0 +1,4 @@
+Ola, o meu nome e Francisco Inacio,
+Venho de Torres Vedras,
+Estudo na 42Lisboa,
+e isto e um teste para o pipex...
