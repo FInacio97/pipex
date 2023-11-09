@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/09 18:11:30 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/09 22:30:18 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	accessibility(t_data *data, char *in_file)
 		data->file_out);
 		data->out_flag = 1;
 	}
-	if (access(data->file_out, W_OK) == 0)
+	else if (access(data->file_out, W_OK) == 0)
 		ft_printf("OUT FILE: Access granted!\n");
 	else
 		to_exit(data, "OUT FILE: Access denied...\n");

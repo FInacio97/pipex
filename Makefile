@@ -24,7 +24,6 @@ fclean:
 	rm -f $(NAME)
 	@make -sC $(LIBFT_PATH) fclean
 
-re:
-	fclean all
+re: fclean all
 
 .PHONY: all clean fclean re
