@@ -6,6 +6,7 @@ FLAGS = -Wall -Werror -Wextra
 OTHERFLAGS = -L$(LIBFT_PATH) -lft -o $(NAME)
 
 SRCS = ./sources/pipex.c	./sources/parsing.c	./sources/utils.c\
+		./sources/process_generator.c
 
 OBJS = $(SRCS:.c=.o)
 
