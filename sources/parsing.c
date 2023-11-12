@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 16:21:11 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:09:19 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	accessibility(t_data *data, char *in_file)
 {
 	if (data->limiter == NULL)
 	{
-		ft_printf("yooo\n");
 		if (access(in_file, F_OK) == -1)
 			to_exit(data, "||ERROR||\nCouldn't find infile...\n");
 		if (access(in_file, R_OK) == -1)

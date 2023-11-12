@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 14:58:15 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 22:23:33 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef struct s_data
 	int		*pid;
 	int		read_fd;
 	int		write_fd;
-	char	*env;
+	char	**env;
+	char	**cmds_paths;
 
 	char	*file_out;
 	char	**cmds;
@@ -48,12 +49,18 @@ void	parsing(t_data *data, char **av);
 void	executor(t_data *data, int i);
 void	process_generator(t_data *data);
 
+/*PATH HANDELING*/
+char	*dir_finder(t_data *data);
+void	path_finder_error(t_data *data, char *cmd_name);
+void	path_finder(t_data *data, char **path_dir, int i);
+void	path_handeling(t_data *data);
+
 /*UTILS*/
-void	initializer(t_data *data, char **av, int ac);
+void	initializer(t_data *data, char **av, int ac, char **envp);
 void	to_exit(t_data *data, char *error);
 int		to_close(int fd);
-void	environment_init(t_data *data, char **envp);
-
+char	*first_word(char *s);
+void	to_exit_2(t_data *data, char *error, char *s1, char *s2);
 
 
 #endif
