@@ -6,15 +6,18 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/11 23:31:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:35:01 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 
-/*DON'T FORGET: if you're supposed to use here_doc as input, you are supposed
-NOT to overwrite the file*/
+/*Make it so that if one of the child processes fails to execute, the program
+ doesnt write anything in the out file. the solution is that the last CP instead
+ of writing directly on the file, writes in another pipe. After the parent
+ process waits for all CPs to end (with a positive exit status), it reads the
+ content of the last pipe and writes it in the out file*/
 
 int	main(int ac, char **av, char **envp)
 {

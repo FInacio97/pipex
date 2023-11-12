@@ -2,7 +2,7 @@ NAME = pipex
 
 LIBFT_PATH = ./libft/
 LIBFT =	$(LIBFT_PATH)libft.a
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra #-fsanitize=address
 OTHERFLAGS = -L$(LIBFT_PATH) -lft -o $(NAME)
 
 SRCS = ./sources/pipex.c	./sources/parsing.c	./sources/utils.c\

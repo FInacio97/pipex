@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/11 23:00:40 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:19:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ void	initializer(t_data *data, char **av, int ac)
 	data->cmds = NULL;
 	data->in_file_fd = -1;
 	data->out_file_fd = -1;
+	data->read_fd = -1;
+	data->write_fd = -1;
+	data->cmd_arg = NULL;
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
 	{
 		data->limiter = ft_strdup(av[2]);
@@ -52,8 +55,7 @@ void	to_exit(t_data *data, char *error)
 		free (data->file_out);
 	if (data->pid)
 		free (data->pid);
-	if (data->cmd_arg)
-		free (data->cmd_arg);
+	ft_printf("aqui\n");
 	if (data->env)
 		free (data->env);
 	exit (0);

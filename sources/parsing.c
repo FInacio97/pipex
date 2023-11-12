@@ -6,55 +6,26 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/11 18:32:08 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:21:11 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	accessibility_helper(t_data *data)
-{
-	if (access(data->file_out, F_OK) == -1)
-	{
-		ft_printf("OUT FILE: could not be found\n%s will be created\n",
-		data->file_out);
-		data->out_file_fd = open(data->file_out, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
-	}
-	else if (access(data->file_out, W_OK) == 0)
-		data->out_file_fd = open(data->file_out, O_WRONLY | O_APPEND);
-	else
-		to_exit(data, "OUT FILE: Access denied...\n");
-	if (data->out_file_fd == -1 || data->in_file_fd == -1)
-		to_exit(data, "||ERROR||\nTrouble to open out/input file...\n");
-	ft_printf("FILES OK\n");
-}
-
 void	accessibility(t_data *data, char *in_file)
 {
-	ft_printf("\n====||FILE HANDELING||====\n");
-	if (!data->limiter)
+	if (data->limiter == NULL)
 	{
+		ft_printf("yooo\n");
 		if (access(in_file, F_OK) == -1)
-			to_exit(data, "IN FILE: could not be found...\n");
+			to_exit(data, "||ERROR||\nCouldn't find infile...\n");
 		if (access(in_file, R_OK) == -1)
-			to_exit(data, "IN FILE: Access denied...\n");
-		data->in_file_fd = open(in_file, O_RDONLY);
-		accessibility_helper(data);
-		return ;
+			to_exit(data, "||ERROR||\nInfile: permission denied...\n");
 	}
 	if (access(data->file_out, F_OK) == -1)
-	{
-		ft_printf("OUT FILE: could not be found\n%s will be created\n",
-		data->file_out);
-		data->out_file_fd = open(data->file_out, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-	}
-	else if (access(data->file_out, W_OK) == 0)
-		data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
-	else
-		to_exit(data, "OUT FILE: Access denied...\n");
-	if (data->out_file_fd == -1)
-		to_exit(data, "||ERROR||\nTrouble to open out/input file...\n");
-	ft_printf("FILES OK\n");
+			to_exit(data, "||ERROR||\nCouldn't find outfile...\n");
+		if (access(data->file_out, W_OK) == -1)
+			to_exit(data, "||ERROR||\nOutfile: permission denied...\n");
 }
 
 void	read_here_doc(t_data *data)
@@ -102,10 +73,28 @@ void	command_filler(t_data *data, char **av)
 	
 }
 
+void	file_opener(t_data *data, char *in_file)
+{
+	if (data->limiter == NULL)
+	{
+		data->in_file_fd = open(in_file, O_RDONLY);
+		if (data->in_file_fd == -1)
+		to_exit(data, "||ERROR||\nTrouble open in_file...\n");
+		data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
+		if (data->out_file_fd == -1)
+		to_exit(data, "||ERROR||\nTrouble open out_file...\n");
+		return ;
+	}
+	data->out_file_fd = open(data->file_out, O_WRONLY | O_APPEND);
+	if (data->out_file_fd == -1)
+		to_exit(data, "||ERROR||\nTrouble open out file...\n");
+}
+
 void	parsing(t_data *data, char **av)
 {
 	accessibility(data, av[1]);
 	if (data->limiter)
 		read_here_doc(data);
 	command_filler(data, av);
+	file_opener(data, av[1]);
 }
