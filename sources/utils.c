@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 22:44:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:13:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ void	to_exit(t_data *data, char *error)
 		free (data->pid);
 	if (data->cmds_paths)
 		matrix_deleter(data->cmds_paths);
-	if (data->cmd_arg[0] != NULL)
+	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
-	ft_printf("aqui oh boi!\n");
 	exit (0);
 }
 
@@ -80,7 +79,7 @@ char	*first_word(char *s)
 	i = 0;
 	while (s[i] && s[i] != ' ')
 		i++;
-	prod = malloc(i);
+	prod = malloc(i + 1);
 	if (!prod)
 		return (NULL);
 	i = -1;

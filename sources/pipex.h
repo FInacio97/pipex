@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 22:23:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:14:13 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	parsing(t_data *data, char **av);
 
 /*PROCESS GENERATOR*/
 void	executor(t_data *data, int i);
+void	wait_loop(t_data *data);
 void	process_generator(t_data *data);
 
 /*PATH HANDELING*/

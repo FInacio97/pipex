@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 22:56:41 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:28:37 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,6 @@ void	wait_loop(t_data *data)
 	}
 }
 
-void	file_writer(t_data *data)
-{
-	char *s;
-
-	while (1)
-	{
-		s = get_next_line(data->read_fd);
-		if (!s)
-			break ;
-		write(data->out_file_fd, s, ft_strlen(s));
-		free (s);
-	}
-	to_close(data->read_fd);
-}
-
 void	process_generator(t_data *data)
 {
 	int	fd[2];
@@ -76,24 +61,23 @@ void	process_generator(t_data *data)
 	while (++i < data->cmd_nbr)
 	{
 		data->cmd_arg = ft_split(data->cmds[i], ' ');
-		if (pipe(fd) == -1)
-			to_exit(data, "||ERROR||\nHandeling pipes...\n");
-		data->write_fd = fd[1];
-		
+		if (i < data->cmd_nbr - 1)
+		{
+			if (pipe(fd) == -1)
+				to_exit(data, "||ERROR||\nHandeling pipes...\n");
+			data->write_fd = fd[1];
+		}
+		else
+			data->write_fd = data->out_file_fd;
 		data->pid[i] = fork();
 		if (data->pid[i] == 0)
 			executor(data, i);
 		data->read_fd = to_close(data->read_fd);
 		data->write_fd = to_close(data->write_fd);
-		data->read_fd = fd[0];
+		if (i < data->cmd_nbr - 1)
+			data->read_fd = fd[0];
 		matrix_deleter(data->cmd_arg);
 		data->cmd_arg = NULL;
 	}
-	wait_loop(data);
-	file_writer(data);
-
-	
-
-
-	
+	wait_loop(data);	
 }
