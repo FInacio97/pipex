@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 23:28:37 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:29:19 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ void	executor(t_data *data, int i)
 	to_close(data->write_fd);
 	execve(data->cmds_paths[i], data->cmd_arg, data->env);
 	exit (1);
-	// sleep(i * 1);
-	// while (1)
-	// {
-	// 	s = get_next_line(STDIN_FILENO);
-	// 	if (!s)
-	// 		break ;
-	// 	write (STDOUT_FILENO, s, ft_strlen(s));
-	// 	free (s);
-	// }
-	// exit (0);
 }
 
 void	wait_loop(t_data *data)

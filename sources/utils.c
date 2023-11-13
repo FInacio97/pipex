@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 00:13:55 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:42:13 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ void	to_exit(t_data *data, char *error)
 		free (data->file_out);
 	if (data->pid)
 		free (data->pid);
+	ft_printf("aqui\n");
 	if (data->cmds_paths)
 		matrix_deleter(data->cmds_paths);
+	ft_printf("aqui2\n");
 	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
 	exit (0);

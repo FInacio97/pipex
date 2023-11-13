@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 23:14:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:08:04 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	process_generator(t_data *data);
 
 /*PATH HANDELING*/
 char	*dir_finder(t_data *data);
-void	path_finder_error(t_data *data, char *cmd_name);
-void	path_finder(t_data *data, char **path_dir, int i);
+void	path_finder_error(t_data *data, char *cmd_name, char **path_dir, char *env_path);
+void	path_finder(t_data *data, char **path_dir, int i, char *env_path);
 void	path_handeling(t_data *data);
 
 /*UTILS*/

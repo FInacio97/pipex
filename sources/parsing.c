@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 23:43:53 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:35:31 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	read_here_doc(t_data *data)
 
 	if (pipe(fd) == -1)
 		to_exit(data, "||ERROR||\nHandeling pipes...\n");
-	ft_printf("\nPlease write the content...\n");
 	while (1)
 	{
+		ft_printf("> ");
 		s = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(data->limiter, s, ft_strlen(data->limiter)) == 0
 			&& ft_strlen(data->limiter) == (ft_strlen(s) - 1))
