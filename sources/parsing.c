@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 12:35:31 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:31:09 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	accessibility(t_data *data, char *in_file)
 			to_exit(data, "||ERROR||\nInfile: permission denied...\n");
 	}
 	if (access(data->file_out, F_OK) == -1)
-			to_exit(data, "||ERROR||\nCouldn't find outfile...\n");
-		if (access(data->file_out, W_OK) == -1)
-			to_exit(data, "||ERROR||\nOutfile: permission denied...\n");
+		to_exit(data, "||ERROR||\nCouldn't find outfile...\n");
+	if (access(data->file_out, W_OK) == -1)
+		to_exit(data, "||ERROR||\nOutfile: permission denied...\n");
 }
 
 void	read_here_doc(t_data *data)
@@ -44,7 +44,7 @@ void	read_here_doc(t_data *data)
 		write(fd[1], s, ft_strlen(s));
 		free (s);
 	}
-	free(s);
+	free (s);
 	close (fd[1]);
 	data->in_file_fd = fd[0];
 }
@@ -69,7 +69,6 @@ void	command_filler(t_data *data, char **av)
 		if (!data->cmds[i])
 			to_exit(data, "||ERROR||\nTrouble with allocating memory...\n");
 	}
-	
 }
 
 void	file_opener(t_data *data, char *in_file)
@@ -78,10 +77,10 @@ void	file_opener(t_data *data, char *in_file)
 	{
 		data->in_file_fd = open(in_file, O_RDONLY);
 		if (data->in_file_fd == -1)
-		to_exit(data, "||ERROR||\nTrouble open in_file...\n");
+			to_exit(data, "||ERROR||\nTrouble open in_file...\n");
 		data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
 		if (data->out_file_fd == -1)
-		to_exit(data, "||ERROR||\nTrouble open out_file...\n");
+			to_exit(data, "||ERROR||\nTrouble open out_file...\n");
 		return ;
 	}
 	data->out_file_fd = open(data->file_out, O_WRONLY | O_APPEND);
@@ -95,5 +94,4 @@ void	parsing(t_data *data, char **av)
 	if (data->limiter)
 		read_here_doc(data);
 	command_filler(data, av);
-	// file_opener(data, av[1]);
 }
