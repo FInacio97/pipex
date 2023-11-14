@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 17:25:21 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/14 22:36:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	wait_loop(t_data *data)
 	while (++j < data->cmd_nbr)
 	{
 		pid = wait(&exit_status);
-		if (exit_status == 1)
-			ft_printf("||ERROR||\n%s could not execute\n", pid);
-		else
+		if (exit_status == 0)
 			ft_printf("Finish execution of child process %d\n", pid);
+		else
+			ft_printf("||ERROR||\nCould not execute command(%d)\texit status: %d\n",pid, exit_status);
 	}
 }
 
