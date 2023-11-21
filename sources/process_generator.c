@@ -6,22 +6,24 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 19:56:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:19:30 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	executor(t_data *data, int i)
+void	executor(t_data *data, int i, int fd)
 {
 	char	*s;
 	dup2(data->read_fd, STDIN_FILENO);
 	dup2(data->write_fd, STDOUT_FILENO);
 	to_close(data->read_fd);
 	to_close(data->write_fd);
+	to_close(data->out_file_fd);
+	to_close(fd);
 	if (ft_strncmp(data->cmds_paths[i], "KO", 3) == 0)
 	{
-		s = ft_strjoin("Could not found command: ", data->cmds[i]);
+		s = ft_strjoin("Could not find command: ", data->cmds[i]);
 		s = ft_strjoin_free(s, "\n", 1);
 		perror(s);
 		free (s);
@@ -39,6 +41,7 @@ void	wait_loop(t_data *data)
 	pid_t	pid;
 
 	j = -1;
+
 	while (++j < data->cmd_nbr)
 	{
 		pid = wait(&exit_status);
@@ -67,7 +70,7 @@ void	process_generator(t_data *data, int i)
 			data->write_fd = data->out_file_fd;
 		data->pid[i] = fork();
 		if (data->pid[i] == 0)
-			executor(data, i);
+			executor(data, i, fd[0]);
 		data->read_fd = to_close(data->read_fd);
 		data->write_fd = to_close(data->write_fd);
 		if (i < data->cmd_nbr - 1)

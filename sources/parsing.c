@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 19:35:56 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:40:24 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	command_filler(t_data *data, char **av)
 	data->cmds[data->cmd_nbr] = 0;
 	while (++i < data->cmd_nbr)
 	{
-		data->cmds[i] = ft_strdup(av[first_cmd + i]);
+		if (av[first_cmd + i][0] == 0)
+			data->cmds[i] = ft_strdup("' '");
+		else
+			data->cmds[i] = ft_strdup(av[first_cmd + i]);
 		if (!data->cmds[i])
 			to_exit(data, "Error: Trouble with allocating memory...\n", 0);
 	}
