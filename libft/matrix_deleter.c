@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 21:04:04 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/12 22:44:46 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:10:38 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	matrix_deleter(char **mtx)
 		return ;
 	while (mtx[i])
 	{
-		free (mtx[i]);
+		if (mtx[i])
+			free (mtx[i]);
 		mtx[i] = NULL;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 17:33:01 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:34:16 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+
+# ifndef LIMIT_ARGS
+#  define LIMIT_ARGS 1
+# endif
 
 typedef struct s_data
 {
@@ -57,7 +62,7 @@ void	path_handeling(t_data *data);
 
 /*UTILS*/
 void	initializer(t_data *data, char **av, int ac, char **envp);
-void	to_exit(t_data *data, char *error);
+void	to_exit(t_data *data, char *error, int exit_status);
 int		to_close(int fd);
 char	*first_word(char *s);
 void	to_exit_2(t_data *data, char *error, char *s1, char *s2);

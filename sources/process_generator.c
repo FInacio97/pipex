@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/14 22:36:52 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:56:17 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 void	executor(t_data *data, int i)
 {
 	char	*s;
-
 	dup2(data->read_fd, STDIN_FILENO);
 	dup2(data->write_fd, STDOUT_FILENO);
 	to_close(data->read_fd);
 	to_close(data->write_fd);
+	if (ft_strncmp(data->cmds_paths[i], "KO", 3) == 0)
+	{
+		s = ft_strjoin("Could not found command: ", data->cmds[i]);
+		s = ft_strjoin_free(s, "\n", 1);
+		perror(s);
+		free (s);
+		to_close(STDIN_FILENO);
+		to_close(STDOUT_FILENO);
+		to_exit(data, NULL, 1);
+	}
 	execve(data->cmds_paths[i], data->cmd_arg, data->env);
-	exit (1);
 }
 
 void	wait_loop(t_data *data)
@@ -37,7 +45,7 @@ void	wait_loop(t_data *data)
 		if (exit_status == 0)
 			ft_printf("Finish execution of child process %d\n", pid);
 		else
-			ft_printf("||ERROR||\nCould not execute command(%d)\texit status: %d\n",pid, exit_status);
+			ft_printf("Error: Could not execute command(%d)\texit status: %d\n",pid, exit_status);
 	}
 }
 
@@ -52,7 +60,7 @@ void	process_generator(t_data *data, int i)
 		if (i < data->cmd_nbr - 1)
 		{
 			if (pipe(fd) == -1)
-				to_exit(data, "||ERROR||\nHandeling pipes...\n");
+				to_exit(data, "Error: Handeling pipes...\n", 0);
 			data->write_fd = fd[1];
 		}
 		else

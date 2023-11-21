@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 17:29:51 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:37:39 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	initializer(t_data *data, char **av, int ac, char **envp)
 	}
 	data->pid = (int *)malloc(sizeof(int) * data->cmd_nbr);
 	if (!data->pid)
-		to_exit(data, "||ERROR||\n trouble allocating memory...\n");
+		to_exit(data, "Error: trouble allocating memory...\n", 0);
 }
 
-void	to_exit(t_data *data, char *error)
+void	to_exit(t_data *data, char *error, int exit_status)
 {
 	if (error)
-		ft_printf("%s", error);
+		perror(error);
 	if (data->read_fd >= 0)
 		close (data->read_fd);
 	if (data->write_fd >= 0)
@@ -62,7 +62,7 @@ void	to_exit(t_data *data, char *error)
 		matrix_deleter(data->cmds_paths);
 	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
-	exit (0);
+	exit (exit_status);
 }
 
 int	to_close(int fd)
@@ -95,5 +95,5 @@ void	to_exit_2(t_data *data, char *error, char *s1, char *s2)
 		free (s1);
 	if (s2)
 		free (s2);
-	to_exit(data, error);
+	to_exit(data, error, 0);
 }

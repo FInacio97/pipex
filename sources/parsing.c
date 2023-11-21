@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/13 17:31:09 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:35:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ void	accessibility(t_data *data, char *in_file)
 	if (data->limiter == NULL)
 	{
 		if (access(in_file, F_OK) == -1)
-			to_exit(data, "||ERROR||\nCouldn't find infile...\n");
+			to_exit(data, "Error: Couldn't find infile...\n", 0);
 		if (access(in_file, R_OK) == -1)
-			to_exit(data, "||ERROR||\nInfile: permission denied...\n");
+			to_exit(data, "Error: Infile: permission denied...\n", 0);
 	}
 	if (access(data->file_out, F_OK) == -1)
-		to_exit(data, "||ERROR||\nCouldn't find outfile...\n");
+	{
+			data->out_file_fd = open(data->file_out, O_WRONLY | O_CREAT
+			, S_IRUSR | S_IWUSR);
+	}
 	if (access(data->file_out, W_OK) == -1)
-		to_exit(data, "||ERROR||\nOutfile: permission denied...\n");
+		to_exit(data, "Error: Outfile: permission denied...\n", 0);
 }
 
 void	read_here_doc(t_data *data)
@@ -33,7 +36,7 @@ void	read_here_doc(t_data *data)
 	char	*s;
 
 	if (pipe(fd) == -1)
-		to_exit(data, "||ERROR||\nHandeling pipes...\n");
+		to_exit(data, "Error: Handeling pipes...\n", 0);
 	while (1)
 	{
 		ft_printf("> ");
@@ -61,13 +64,13 @@ void	command_filler(t_data *data, char **av)
 		first_cmd = 2;
 	data->cmds = malloc(sizeof(char *) * (data->cmd_nbr + 1));
 	if (!data->cmds)
-		to_exit(data, "||ERROR||\nTrouble with allocating memory...\n");
+		to_exit(data, "Error: Trouble with allocating memory...\n", 0);
 	data->cmds[data->cmd_nbr] = 0;
 	while (++i < data->cmd_nbr)
 	{
 		data->cmds[i] = ft_strdup(av[first_cmd + i]);
 		if (!data->cmds[i])
-			to_exit(data, "||ERROR||\nTrouble with allocating memory...\n");
+			to_exit(data, "Error: Trouble with allocating memory...\n", 0);
 	}
 }
 
@@ -77,15 +80,19 @@ void	file_opener(t_data *data, char *in_file)
 	{
 		data->in_file_fd = open(in_file, O_RDONLY);
 		if (data->in_file_fd == -1)
-			to_exit(data, "||ERROR||\nTrouble open in_file...\n");
+			to_exit(data, "Error: Trouble open in_file...\n", 0);
+		if (data->out_file_fd > 0)
+			return;
 		data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
 		if (data->out_file_fd == -1)
-			to_exit(data, "||ERROR||\nTrouble open out_file...\n");
+			to_exit(data, "Error: Trouble open out_file...\n", 0);
 		return ;
 	}
+	if (data->out_file_fd > 0)
+		return;
 	data->out_file_fd = open(data->file_out, O_WRONLY | O_APPEND);
 	if (data->out_file_fd == -1)
-		to_exit(data, "||ERROR||\nTrouble open out file...\n");
+		to_exit(data, "Error: Trouble open out file...\n", 0);
 }
 
 void	parsing(t_data *data, char **av)
