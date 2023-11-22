@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 23:19:30 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/22 18:21:44 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,31 @@ void	executor(t_data *data, int i, int fd)
 	to_close(data->write_fd);
 	to_close(data->out_file_fd);
 	to_close(fd);
-	if (ft_strncmp(data->cmds_paths[i], "KO", 3) == 0)
-	{
-		s = ft_strjoin("Could not find command: ", data->cmds[i]);
-		s = ft_strjoin_free(s, "\n", 1);
-		perror(s);
-		free (s);
-		to_close(STDIN_FILENO);
-		to_close(STDOUT_FILENO);
-		to_exit(data, NULL, 1);
-	}
 	execve(data->cmds_paths[i], data->cmd_arg, data->env);
+	s = ft_strjoin("Could not find command: ", data->cmds[i]);
+	s = ft_strjoin_free(s, "\n", 1);
+	perror(s);
+	free (s);
+	to_close(STDIN_FILENO);
+	to_close(STDOUT_FILENO);
+	to_exit(data, NULL, 127	);
+	// to_exit(data, NULL, );
 }
 
 void	wait_loop(t_data *data)
 {
 	int		j;
-	int		exit_status;
 	pid_t	pid;
 
 	j = -1;
-
 	while (++j < data->cmd_nbr)
 	{
-		pid = wait(&exit_status);
-		if (exit_status == 0)
+		pid = wait(&data->exit_status);
+		if (data->exit_status == 0)
 			ft_printf("Finish execution of child process %d\n", pid);
 		else
-			ft_printf("Error: Could not execute command(%d)\texit status: %d\n",pid, exit_status);
+			ft_printf("Error: Could not execute command(%d)\texit status: %d\n",
+				pid, data->exit_status);
 	}
 }
 

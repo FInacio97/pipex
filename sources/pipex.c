@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 23:18:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:19:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	main(int ac, char **av, char **envp)
 	file_opener(&data, av[1]);
 	process_generator(&data, -1);
 	ft_printf("\nProgram successfully terminated!\n");
-	to_exit(&data, NULL, 0);
+	to_exit(&data, NULL, data.exit_status);
 }

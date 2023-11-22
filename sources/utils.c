@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 19:37:39 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:37:32 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	to_exit(t_data *data, char *error, int exit_status)
 		matrix_deleter(data->cmds_paths);
 	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
+	if (WIFEXITED(exit_status))
+		exit_status = WEXITSTATUS(exit_status);	
 	exit (exit_status);
 }
 

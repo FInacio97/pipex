@@ -25,9 +25,10 @@ clean:
 	rm -f $(OBJS)
 	@make -sC $(LIBFT_PATH) clean
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
 	@make -sC $(LIBFT_PATH) fclean
+	
 
 re: fclean all
 

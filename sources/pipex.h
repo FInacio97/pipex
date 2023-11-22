@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 20:01:58 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:19:47 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_data
 	char	**cmd_arg;
 	char	*limiter;
 	int		cmd_nbr;
+	int		exit_status;
 }				t_data;
 
 /*PARSING*/

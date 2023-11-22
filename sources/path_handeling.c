@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:51:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 19:52:02 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:32:32 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	path_finder(t_data *data, char **path_dir, int i, int j)
 			free (cmd_name);
 			return ;
 		}
+		if (path_dir[j + 1])
+		{
 		free (data->cmds_paths[i]);
 		data->cmds_paths[i] = NULL;
+		}
 	}
-	if (data->cmds_paths[i] == NULL)
-		data->cmds_paths[i] = ft_strdup("KO");
 	path_finder_error(data, cmd_name, path_dir);
 }
 
