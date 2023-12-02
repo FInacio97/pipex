@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/22 18:21:44 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/02 00:50:36 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	executor(t_data *data, int i, int fd)
 {
 	char	*s;
+	if (data->in_file_fd == 1)
+		to_exit(data, NULL, 0);
 	dup2(data->read_fd, STDIN_FILENO);
 	dup2(data->write_fd, STDOUT_FILENO);
 	to_close(data->read_fd);

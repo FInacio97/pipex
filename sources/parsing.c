@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 20:40:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/02 00:49:58 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	accessibility(t_data *data, char *in_file)
 	if (data->limiter == NULL)
 	{
 		if (access(in_file, F_OK) == -1)
-			to_exit(data, "Error: Couldn't find infile...\n", 0);
-		if (access(in_file, R_OK) == -1)
-			to_exit(data, "Error: Infile: permission denied...\n", 0);
+		{
+			data->in_file_fd = 1;
+			perror("Error: Couldn't find infile...\n");
+		}
+		else if (access(in_file, R_OK) == -1)
+			perror("Error: Infile: permission denied...\n");
 	}
 	if (access(data->file_out, F_OK) == -1)
 	{
@@ -81,9 +84,10 @@ void	file_opener(t_data *data, char *in_file)
 {
 	if (data->limiter == NULL)
 	{
-		data->in_file_fd = open(in_file, O_RDONLY);
+		if (data->in_file_fd != 1)
+			data->in_file_fd = open(in_file, O_RDONLY);
 		if (data->in_file_fd == -1)
-			to_exit(data, "Error: Trouble open in_file...\n", 0);
+			perror("Error: Trouble open in_file...\n");
 		if (data->out_file_fd > 0)
 			return;
 		data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
