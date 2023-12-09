@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/22 17:19:47 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 16:16:48 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	path_handeling(t_data *data);
 void	initializer(t_data *data, char **av, int ac, char **envp);
 void	to_exit(t_data *data, char *error, int exit_status);
 int		to_close(int fd);
-char	*first_word(char *s);
+char	*first_word(t_data *data, char *s);
 void	to_exit_2(t_data *data, char *error, char *s1, char *s2);
 
 #endif

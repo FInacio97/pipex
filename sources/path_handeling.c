@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 18:51:12 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/22 17:32:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 16:17:53 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@ char	*dir_finder(t_data *data)
 
 void	path_finder_error(t_data *data, char *cmd, char **p_dir)
 {
-
-	// perror("Error: Command '%s' not found...\n", cmd);
 	free (cmd);
 	(void) data;
 	(void) p_dir;
-	// to_exit(data, NULL, 0);
 }
 
 void	path_finder(t_data *data, char **path_dir, int i, int j)
@@ -40,9 +37,7 @@ void	path_finder(t_data *data, char **path_dir, int i, int j)
 	char	*s;
 	char	*cmd_name;
 
-	cmd_name = first_word(data->cmds[i]);
-	if (!cmd_name)
-		to_exit(data, "Error: Could not allocate memory...\n", 0);
+	cmd_name = first_word(data, data->cmds[i]);
 	while (path_dir[++j])
 	{
 		s = ft_strjoin(path_dir[j], "/");
@@ -59,8 +54,8 @@ void	path_finder(t_data *data, char **path_dir, int i, int j)
 		}
 		if (path_dir[j + 1])
 		{
-		free (data->cmds_paths[i]);
-		data->cmds_paths[i] = NULL;
+			free (data->cmds_paths[i]);
+			data->cmds_paths[i] = NULL;
 		}
 	}
 	path_finder_error(data, cmd_name, path_dir);
@@ -82,7 +77,6 @@ void	path_handeling(t_data *data)
 	if (!data->cmds_paths)
 		to_exit(data, "Error: Could not allocate memory...\n", 0);
 	data->cmds_paths[data->cmd_nbr] = 0;
-
 	while (data->cmds[++i])
 		path_finder(data, path_dir, i, -1);
 	matrix_deleter(path_dir);

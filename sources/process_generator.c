@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/07 17:18:59 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 16:11:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	executor(t_data *data, int i, int fd)
 {
 	char	*s;
-	
+
 	if (data->read_fd == 1)
 	{
 		to_close(data->read_fd);
@@ -37,7 +37,7 @@ void	executor(t_data *data, int i, int fd)
 	free (s);
 	to_close(STDIN_FILENO);
 	to_close(STDOUT_FILENO);
-	to_exit(data, NULL, 127	);
+	to_exit(data, NULL, 127);
 }
 
 void	wait_loop(t_data *data)

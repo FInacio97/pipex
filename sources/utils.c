@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/22 17:37:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 16:16:10 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	to_exit(t_data *data, char *error, int exit_status)
 	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
 	if (WIFEXITED(exit_status))
-		exit_status = WEXITSTATUS(exit_status);	
+		exit_status = WEXITSTATUS(exit_status);
 	exit (exit_status);
 }
 
@@ -73,7 +73,7 @@ int	to_close(int fd)
 	return (-1);
 }
 
-char	*first_word(char *s)
+char	*first_word(t_data *data, char *s)
 {
 	int		i;
 	char	*prod;
@@ -83,7 +83,7 @@ char	*first_word(char *s)
 		i++;
 	prod = malloc(i + 1);
 	if (!prod)
-		return (NULL);
+		to_exit(data, "Error: Could not allocate memory...\n", 0);
 	i = -1;
 	while (s[++i] && s[i] != ' ')
 		prod[i] = s[i];
