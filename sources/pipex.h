@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 16:16:48 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:59:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,40 +28,44 @@
 
 typedef struct s_data
 {
-	int		in_file_fd;
-	int		out_file_fd;
+	char	*in_file;
+	char	*file_out;
 	int		*pid;
 	int		read_fd;
 	int		write_fd;
 	char	**env;
 	char	**cmds_paths;
-	char	*file_out;
 	char	**cmds;
 	char	**cmd_arg;
 	char	*limiter;
 	int		cmd_nbr;
 	int		exit_status;
+	int		remainder_fd;
 }				t_data;
 
-/*PARSING*/
-void	accessibility(t_data *data, char *in_file);
+/* PARSING */
+// void	accessibility(t_data *data, char *in_file);
 void	read_here_doc(t_data *data);
 void	command_filler(t_data *data, char **av);
-void	file_opener(t_data *data, char *in_file);
+// void	file_opener(t_data *data, char *in_file);
 void	parsing(t_data *data, char **av);
 
-/*PROCESS GENERATOR*/
+/* PROCESS GENERATOR */
 void	executor(t_data *data, int i, int fd);
 void	wait_loop(t_data *data);
 void	process_generator(t_data *data, int i);
 
-/*PATH HANDELING*/
+/* PATH HANDELING */
 char	*dir_finder(t_data *data);
 void	path_finder_error(t_data *data, char *cmd, char **p_dir);
 void	path_finder(t_data *data, char **path_dir, int i, int j);
 void	path_handeling(t_data *data);
 
-/*UTILS*/
+/* REDIRECTIONS */
+void    redirect_in(t_data *data);
+void    redirect_out(t_data *data);
+
+/* UTILS */
 void	initializer(t_data *data, char **av, int ac, char **envp);
 void	to_exit(t_data *data, char *error, int exit_status);
 int		to_close(int fd);

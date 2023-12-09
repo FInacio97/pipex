@@ -6,7 +6,8 @@ CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address (commented out for now)
 OTHERFLAGS = -L$(LIBFT_PATH) -lft -o $(NAME)
 
 SRCS = ./sources/pipex.c	./sources/parsing.c	./sources/utils.c\
-		./sources/process_generator.c	./sources/path_handeling.c
+		./sources/process_generator.c	./sources/path_handeling.c\
+		./sources/redirections.c
 
 OBJS = $(SRCS:.c=.o)
 

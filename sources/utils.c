@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:58:17 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 16:16:10 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:02:05 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@ void	initializer(t_data *data, char **av, int ac, char **envp)
 	data->env = envp;
 	data->cmds = NULL;
 	data->cmds_paths = NULL;
-	data->in_file_fd = -1;
-	data->out_file_fd = -1;
 	data->read_fd = -1;
 	data->write_fd = -1;
 	data->cmd_arg = NULL;
+	data->exit_status = 0;
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
 	{
 		data->limiter = ft_strdup(av[2]);
 		data->cmd_nbr = ac - 4;
+		data->in_file = NULL;
 	}
 	else
 	{
+		data->in_file = ft_strdup(av[1]);
 		data->limiter = NULL;
 		data->cmd_nbr = ac - 3;
 	}
@@ -46,10 +47,6 @@ void	to_exit(t_data *data, char *error, int exit_status)
 		close (data->read_fd);
 	if (data->write_fd >= 0)
 		close (data->write_fd);
-	if (data->in_file_fd >= 0)
-		close (data->in_file_fd);
-	if (data->out_file_fd >= 0)
-		close (data->out_file_fd);
 	if (data->limiter)
 		free (data->limiter);
 	if (data->cmds)
@@ -62,6 +59,8 @@ void	to_exit(t_data *data, char *error, int exit_status)
 		matrix_deleter(data->cmds_paths);
 	if (data->cmd_arg != NULL)
 		matrix_deleter(data->cmd_arg);
+	if (data->in_file)
+		free (data->in_file);
 	if (WIFEXITED(exit_status))
 		exit_status = WEXITSTATUS(exit_status);
 	exit (exit_status);
@@ -69,7 +68,8 @@ void	to_exit(t_data *data, char *error, int exit_status)
 
 int	to_close(int fd)
 {
-	close (fd);
+	if (fd != -1)
+		close (fd);
 	return (-1);
 }
 

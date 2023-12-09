@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 16:11:56 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:27:05 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,23 @@
 void	executor(t_data *data, int i, int fd)
 {
 	char	*s;
-
-	if (data->read_fd == 1)
-	{
-		to_close(data->read_fd);
-		to_close(data->write_fd);
-		to_close(data->out_file_fd);
-		to_close(fd);
-		to_exit(data, NULL, 0);
-	}
+	
+	to_close(fd);
+	if (!data->limiter && i == 0)
+		redirect_in(data);
+	if (i == data->cmd_nbr - 1)
+		redirect_out(data);
 	dup2(data->read_fd, STDIN_FILENO);
 	dup2(data->write_fd, STDOUT_FILENO);
 	to_close(data->read_fd);
 	to_close(data->write_fd);
-	to_close(data->out_file_fd);
-	to_close(fd);
 	execve(data->cmds_paths[i], data->cmd_arg, data->env);
 	s = ft_strjoin("Could not find command: ", data->cmds[i]);
 	s = ft_strjoin_free(s, "\n", 1);
 	perror(s);
 	free (s);
-	to_close(STDIN_FILENO);
-	to_close(STDOUT_FILENO);
+	// to_close(STDIN_FILENO);
+	// to_close(STDOUT_FILENO);
 	to_exit(data, NULL, 127);
 }
 
@@ -49,11 +44,11 @@ void	wait_loop(t_data *data)
 	while (++j < data->cmd_nbr)
 	{
 		pid = wait(&data->exit_status);
-		if (data->exit_status == 0)
-			ft_printf("Finish execution of child process %d\n", pid);
-		else
-			ft_printf("Error: Could not execute command(%d)\texit status: %d\n",
-				pid, data->exit_status);
+		// if (data->exit_status == 0)
+		// 	ft_printf("Finish execution of child process %d\n", pid);
+		// else
+		// 	ft_printf("Error: Could not execute command(%d)\texit status: %d\n",
+		// 		pid, data->exit_status);
 	}
 }
 
@@ -61,7 +56,6 @@ void	process_generator(t_data *data, int i)
 {
 	int	fd[2];
 
-	data->read_fd = data->in_file_fd;
 	while (++i < data->cmd_nbr)
 	{
 		data->cmd_arg = ft_split(data->cmds[i], ' ');
@@ -71,8 +65,6 @@ void	process_generator(t_data *data, int i)
 				to_exit(data, "Error: Handeling pipes...\n", 0);
 			data->write_fd = fd[1];
 		}
-		else
-			data->write_fd = data->out_file_fd;
 		data->pid[i] = fork();
 		if (data->pid[i] == 0)
 			executor(data, i, fd[0]);
