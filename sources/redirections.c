@@ -6,13 +6,13 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 19:11:50 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/10 13:45:43 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:59:39 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void    redirect_in(t_data *data,int fd)
+void	redirect_in(t_data *data, int fd)
 {
 	if (access(data->in_file, F_OK) == -1)
 	{
@@ -31,7 +31,8 @@ void    redirect_in(t_data *data,int fd)
 		to_exit(data, "Error: Trouble open in_file...\n", 1);
 	}
 }
-void    redirect_out(t_data *data, int fd)
+
+void	redirect_out(t_data *data, int fd)
 {
 	if (access(data->file_out, F_OK) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:52 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 21:15:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:59:49 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int ac, char **av, char **envp)
 	initializer(&data, av, ac, envp);
 	parsing(&data, av);
 	path_handeling(&data);
-	// file_opener(&data, av[1]);
 	process_generator(&data, -1);
 	to_exit(&data, NULL, data.exit_status);
 }
