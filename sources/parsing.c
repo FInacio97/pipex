@@ -6,29 +6,11 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:46 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 21:15:28 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/10 12:35:05 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-// void	accessibility(t_data *data, char *in_file)
-// {
-// 	if (data->limiter == NULL)
-// 	{
-// 		if (access(in_file, F_OK) == -1)
-// 		{
-// 			data->in_file_fd = 1;
-// 			perror("Error: Couldn't find infile...\n");
-// 		}
-// 		else if (access(in_file, R_OK) == -1)
-// 		{
-// 			printf("yoooooo\n");
-// 			data->in_file_permission = 1;
-// 			perror("Error: Infile: permission denied...\n");
-// 		}
-// 	}
-// }	
+#include "pipex.h"	
 
 void	read_here_doc(t_data *data)
 {
@@ -76,28 +58,6 @@ void	command_filler(t_data *data, char **av)
 			to_exit(data, "Error: Trouble with allocating memory...\n", 0);
 	}
 }
-
-// void	file_opener(t_data *data, char *in_file)
-// {
-// if (data->limiter == NULL)
-// {
-// 	if (data->in_file_fd == 0 && data->in_file_permission == 0)
-// 		data->in_file_fd = open(in_file, O_RDONLY);
-// 	if (data->in_file_fd == -1)
-// 		perror ("Error: Trouble open in_file...\n");
-// 	if (data->out_file_fd > 0)
-// 		return ;
-// 	data->out_file_fd = open(data->file_out, O_WRONLY | O_TRUNC);
-// 	if (data->out_file_fd == -1)
-// 		to_exit(data, "Error: Trouble open out_file...\n", 0);
-// 	return ;
-// }
-// if (data->out_file_fd > 0)
-// 	return ;
-// data->out_file_fd = open(data->file_out, O_WRONLY | O_APPEND);
-// if (data->out_file_fd == -1)
-// 	to_exit(data, "Error: Trouble open out file...\n", 0);
-// }
 
 void	parsing(t_data *data, char **av)
 {

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 16:18:58 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/09 20:59:57 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:43:11 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ typedef struct s_data
 }				t_data;
 
 /* PARSING */
-// void	accessibility(t_data *data, char *in_file);
 void	read_here_doc(t_data *data);
 void	command_filler(t_data *data, char **av);
-// void	file_opener(t_data *data, char *in_file);
 void	parsing(t_data *data, char **av);
 
 /* PROCESS GENERATOR */
@@ -62,8 +60,8 @@ void	path_finder(t_data *data, char **path_dir, int i, int j);
 void	path_handeling(t_data *data);
 
 /* REDIRECTIONS */
-void    redirect_in(t_data *data);
-void    redirect_out(t_data *data);
+void    redirect_in(t_data *data, int fd);
+void    redirect_out(t_data *data, int fd);
 
 /* UTILS */
 void	initializer(t_data *data, char **av, int ac, char **envp);
