@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 18:36:37 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/12/10 13:56:52 by fda-estr         ###   ########.fr       */
+/*   Updated: 2023/12/10 14:51:52 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	executor(t_data *data, int i, int fd)
 	s = ft_strjoin_free(s, "\n", 1);
 	perror(s);
 	free (s);
-	// to_close(STDIN_FILENO);
-	// to_close(STDOUT_FILENO);
+	to_close(STDIN_FILENO);
+	to_close(STDOUT_FILENO);
 	to_exit(data, NULL, 127);
 }
 
@@ -70,6 +70,9 @@ void	process_generator(t_data *data, int i)
 		data->pid[i] = fork();
 		if (data->pid[i] == 0)
 			executor(data, i, fd[0]);
+		if (data->limiter && i == 0)
+			to_close(data->read_fd);
+		to_close(data->read_fd);
 		to_close(data->write_fd);
 		if (i < data->cmd_nbr - 1)
 			data->read_fd = fd[0];
